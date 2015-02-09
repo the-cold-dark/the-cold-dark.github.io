@@ -1,0 +1,179 @@
+<head>
+  <title>CSP: Features</title>
+</head>
+
+
+<style type="text/css">
+BODY {
+  color: black;
+  background-color: white;
+  background-image: url("images/bg-2.gif");
+  font-family: sans-serif; }
+TT {
+  font-weight: normal;
+  font-style: normal;
+  font-family: courier; }
+H1 { font-family: sans-serif; }
+H2 { font-family: sans-serif; }
+H3 { font-family: sans-serif; }
+H4 { font-family: sans-serif; }
+PRE { font-family: monospace; }
+TH { font-family: sans-serif; }
+TD { font-family: sans-serif; }
+TABLE { border: 0; }
+IMG { border: 0 }
+</style>
+
+<script language=javascript src="psrc.js">
+</script>
+
+<body bgcolor=#ffffff text=#000000 link=#2000bf vlink=#0f005f alink=#af002f>
+<center>
+<img src="images/cold-title.gif" alt="the Cold Software Project" width=499 height=53>
+
+<table border=0 cellspacing=0 cellpadding=0 width=500>
+<tr>
+<td align=center width=500>
+<a href="download.html"
+   onMouseOver="imgOver('cbar-download')"
+   onMouseOut="imgOut('cbar-download')"><img
+   name="cbar-download"
+   src="images/cbar-download.gif"
+   border=0
+   width=122
+   height=25
+   hspace=0
+   vspace=0
+   alt="[Download]"></a><a
+href="reference.html"
+   onMouseOver="imgOver('cbar-reference')"
+   onMouseOut="imgOut('cbar-reference')"><img
+   name="cbar-reference"
+   src="images/cbar-reference.gif"
+   border=0
+   width=117
+   height=25
+   hspace=0
+   vspace=0
+   alt="[Reference]"></a><a
+href="http://ice.cold.org:1180/cold_servers/list"
+   onMouseOver="imgOver('cbar-servers')"
+   onMouseOut="imgOut('cbar-servers')"><img
+   name="cbar-servers"
+   src="images/cbar-servers.gif"
+   border=0
+   width=91
+   height=25
+   hspace=0
+   vspace=0
+   alt="[Servers]"></a><a
+href="contact.html"
+   onMouseOver="imgOver('cbar-contact')"
+   onMouseOut="imgOut('cbar-contact')"><img
+   name="cbar-contact"
+   src="images/cbar-contact.gif"
+   border=0
+   width=89
+   height=25
+   hspace=0
+   vspace=0
+   alt="[Contact]"></a><a
+href="info.html"
+   onMouseOver="imgOver('cbar-info')"
+   onMouseOut="imgOut('cbar-info')"><img
+   name="cbar-info"
+   src="images/cbar-info.gif"
+   border=0
+   width=81
+   height=25
+   hspace=0
+   vspace=0
+   alt="[Info]"></a>
+</td></tr></table>
+</center>
+<p>
+
+
+<center>
+<p>
+<table border=0 width=450>
+<tr>
+<td>
+<h1>Features</h1>
+
+<p>The Cold Project manages evolution and development of ColdC and Genesis,
+a ColdC driver.  ColdC is an Object Oriented database server language
+originally engineered by Greg Hudson with influences from C, MOO and
+CoolMUD.
+
+<!--
+<p>If you are considering creating a MUD, Cold may be a solution for you.
+It is powerful, fast and easily extendable.  Comparing the core
+Genesis interpreter with MOO shows it to be
+<a href="http://www.cold.org/MOOvsCold">ten to thirty times</a> faster.
+It uses memory efficiently and runs well in restricted memory servers.
+Desirable Driver, Language and Core features include:
+-->
+
+<dl>
+<dt><font size="+1" color="#990000"><b>Disk based database</b></font>
+<dd>Because the database is disk based, only the currently active objects
+will be in memory.  This means you driver will not bloat into large virtual
+memory pages.
+<dt><font size="+1" color="#990000"><b>Efficient interpreter</b></font>
+<dd>The interpreter for ColdC is engineered for speed by using abstract
+representations of data (hashes) rather than manipulating string after
+string directly.
+<dt><font size="+1" color="#990000"><b>Easily Extendable</b></font>
+<dd>Genesis allows for additions of Native Methods to objects through a
+simple module system.  This means you can optimize your database as needed.
+Furthermore, it also allows for easy additions of new data types.
+<dt><font size="+1" color="#990000"><b>Multiple Inheritance</b></font>
+<dd>ColdC allows for multiple parents per object.
+<dt><font size="+1" color="#990000"><b>Powerful Networking</b></font>
+<dd>ColdC gives the ability to easily handle multiple incoming and
+outgoing connections.  You are not restricted to a single connection
+port--instead you can have multiple ports for each service.
+<dt><font size="+1" color="#990000"><b>Language Encapsulation</b></font>
+<dd>ColdC has a high defined role for data encapsulation and modularity.
+<dt><font size="+1" color="#990000"><b>Server Role Abstraction</b></font>
+<dd>The server does not try to manage your database, it simply interprets
+ColdC.  It does not handle permissions, command parsing nor anything else.
+It simply knows of a connection and sends the input and output to and
+from the connection respectively.  Because of this
+the same driver has successfully been used to write MUDs and dynamic
+WWW servers.
+<dt><font size="+1" color="#990000"><b>Asynchronous Backups</b></font>
+<dd>Database backups are done asyncronously, while your system is still
+functioning as normal.
+<dt><font size="+1" color="#990000"><b>Dynamic Text</b></font>
+<dd>ColdCore defines <i>ctext</i> which is an internal abstraction of
+text.  Using <i>ctext</i> ColdCore can quickly parse a document to HTML,
+Plain-Text or any other text format you desire.
+<dt><font size="+1" color="#990000"><b>Multi-Platform Support</b></font>
+<dd>Genesis compiles with ease on nearly all modern unix and Win32
+systems.
+</dl>
+
+</tr></td></table>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=1 width=500>
+<tr>
+<td bgcolor="#000000">
+<table border=0 width="100%" cellspacing=1 cellpadding=3>
+<tr>
+  <td bgcolor="#c0c0ff" align=center>
+  <font size=1>
+  Last Modified on
+ 25-Aug-2005,
+ Copyright &copy; 1995-2015
+ by Brandon Gillespie, for the Cold Project
+ </font>
+ </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</center>

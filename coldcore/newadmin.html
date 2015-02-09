@@ -1,0 +1,338 @@
+<head>
+  <title>ColdCore New Admins Guide</title>
+</head>
+
+<style type="text/css">
+BODY {
+  color: black;
+  background-color: white;
+  background-image: url("../images/bg-2.gif");
+  font-family: sans-serif; }
+TT {
+  font-weight: normal;
+  font-style: normal;
+  font-family: courier; }
+H1 { font-family: sans-serif; }
+H2 { font-family: sans-serif; }
+H3 { font-family: sans-serif; }
+H4 { font-family: sans-serif; }
+PRE { font-family: monospace; }
+TH { font-family: sans-serif; }
+TD { font-family: sans-serif; }
+TABLE { border: 0; }
+IMG { border: 0 }
+</style>
+
+<script language=javascript src="psrc.js">
+</script>
+
+<body bgcolor=#ffffff text=#000000 link=#2000bf vlink=#0f005f alink=#af002f>
+<center>
+<img src="../images/cold-title.gif" alt="the Cold Software Project" width=499 height=53>
+
+<table border=0 cellspacing=0 cellpadding=0 width=500>
+<tr>
+<td align=center width=500>
+<a href="../download.html"
+   onMouseOver="imgOver('cbar-download')"
+   onMouseOut="imgOut('cbar-download')"><img
+   name="cbar-download"
+   src="../images/cbar-download.gif"
+   border=0
+   width=122
+   height=25
+   hspace=0
+   vspace=0
+   alt="[Download]"></a><a
+href="../reference.html"
+   onMouseOver="imgOver('cbar-reference')"
+   onMouseOut="imgOut('cbar-reference')"><img
+   name="cbar-reference"
+   src="../images/cbar-reference.gif"
+   border=0
+   width=117
+   height=25
+   hspace=0
+   vspace=0
+   alt="[Reference]"></a><a
+href="http://ice.cold.org:1180/cold_servers/list"
+   onMouseOver="imgOver('cbar-servers')"
+   onMouseOut="imgOut('cbar-servers')"><img
+   name="cbar-servers"
+   src="../images/cbar-servers.gif"
+   border=0
+   width=91
+   height=25
+   hspace=0
+   vspace=0
+   alt="[Servers]"></a><a
+href="../contact.html"
+   onMouseOver="imgOver('cbar-contact')"
+   onMouseOut="imgOut('cbar-contact')"><img
+   name="cbar-contact"
+   src="../images/cbar-contact.gif"
+   border=0
+   width=89
+   height=25
+   hspace=0
+   vspace=0
+   alt="[Contact]"></a><a
+href="../info.html"
+   onMouseOver="imgOver('cbar-info')"
+   onMouseOut="imgOut('cbar-info')"><img
+   name="cbar-info"
+   src="../images/cbar-info.gif"
+   border=0
+   width=81
+   height=25
+   hspace=0
+   vspace=0
+   alt="[Info]"></a>
+</td></tr></table>
+</center>
+<p>
+
+<p>
+<center>
+<table border=0><tr><td>
+<h1 align=center>ColdCore New Admins Guide</h1>
+
+<p align=center>An Introduction to Setting Up a ColdCore Database<br>
+
+<p align=center><i>Originally created by Chuck Shepherd</i><br>
+<i>Further updated by Brandon Gillespie</i>
+
+<blockquote><i>
+<font size=+1>
+<p>DISCLAIMER: A lot of important information is left out.
+If you feel something should be included, please let me
+know! This document will improve a lot faster if
+others help.
+</font>
+</i></blockquote>
+
+<h2>Purpose</h2>
+
+The ColdCore New Admins Guide is meant to discuss
+some of the issues that new Admins run into when first setting
+up the ColdCore database used with the cold virtual environment
+server. It is not meant to be a general
+<a href="http://www.cold.org:1180/bin/help">Guide to the Core</a>, or a
+<a href="http://www.cold.org:1180/bin/help?node=$help_coldc">Guide to the ColdC Language</a>,
+ nor an <a href="install.html">Installation Guide</a>.
+
+<h2>Some terminology</h2>
+
+Some preliminary definitions:
+
+<blockquote>
+<dl>
+<dt><b>driver</b>
+<dd>The software program which manages the database.
+<dt><b>database</b>
+<dd>Procedures and information used to define the specific
+behaviour of the driver.
+<dt><b>server</b>
+<dd>Both a driver and database functioning together on a
+network site.
+
+<dt><b>ColdC</b>
+<dd>The object-oriented database language used by the driver.
+Loosely based off C with object extensions.
+
+<dt><b>ColdCore</b>
+<dd>The primary Virtual Environment System core database under
+development by the Cold Project.
+
+<dt><b>Genesis</b>
+<dd>The Cold Project's ColdC driver.
+</dl>
+</blockquote>
+
+<h2>Initial Login</h2>
+
+<p>After you start up the server, telnet to port 1138 to
+that machine. For the curious, the port 1138
+was not chosen solely as a nice sounding random number, but
+is minor homage to George Lucas and Star Wars fandom. The
+label 'THX 1138' is found in several places throughout the films
+of George Lucas.  Specifically, in Star Wars IV when Luke and Han transfer
+a prisoner (Chewie) from cell block 1138.
+
+<p>After issuing the telnet command, the following splash screen will be
+displayed if the server is running:
+
+<p>
+<hr size=1 width="50%" noshade>
+<p>
+<center><tt>
+                       + ColdCore +<br><br>
+
+                Virtual Environment Server<br><br>
+
+
+"Make it idiot proof and someone will make a better idiot."<br><br>
+
+
+              Administrators: nothing<br>
+               Currently Connected users: 0<br>
+                    Core: ColdCore 3.0<br>
+                Driver: Cold Genesis 1.1-1<br><br>
+
+          ** Use 'H?elp' for a list of commands **<br>
+</tt></center>
+<p>
+<hr size=1 width="50%" noshade>
+
+<p>
+The quotation and database version may differ from what is
+shown here. At this point, create yourself a user with
+the create command, given with the syntax:
+
+<blockquote><tt>create &lt;name&gt; &lt;password&gt; &lt;email@host&gt;</tt></blockquote>
+
+where:
+
+<blockquote>
+   <tt>&lt;name&gt;</tt> is the name you wish to have,
+   <tt>&lt;password&gt;</tt> is the password you will use, and
+   <tt>&lt;email@host&gt;</tt> is a valid email address to contact you.
+</blockquote>
+
+After you connect, you will be placed into the pit.
+
+<p><h3><i>*** IMPORTANT ***</i></h3>
+
+At this time, all new users will be Admins with full access to
+the database. Since being an Admin is equivalent in powers to
+having a 'root' permissions for the database, or being a wizard
+on a MU*, one of the first things you will want to do is to change
+the default user class to something more benign.
+
+<h2>Setting the User Class</h2>
+
+When ColdCore is first started up, the default user class is
+'$admin', which gives new users full access to the server. Since
+you probably don't want everyone on your cold server to be a
+administrator and for security reasons it's a good idea to change the
+default user class to something less powerful than $admin for
+anyone who will not be an administrator.
+
+<p>If you want new starting characters to be programmers by default,
+issue the following commands as an Administrator:
+
+<blockquote><tt>
+@mojo on<br>
+;$sys.set_starting('new_user_class, $programmer)<br>
+@mojo off
+</tt></blockquote>
+
+Other acceptable user classes are <tt>$user</tt> and <tt>$builder</tt>. These
+can replace the <tt>$programmer</tt> to make the default user class
+either $user or $builder.
+
+<h2>About @mojo</h2>
+
+The @mojo command provides a tool for turning system access to the
+database on and off. It's a simple protection mechanism to
+help administrators from accidentally destroying or messing
+up parts of the database.
+
+<blockquote><tt>@mojo on</tt></blockquote>
+
+When you are done using the super-Admin powers, make sure to
+turn that ability off. This can be done with the command:
+
+<blockquote><tt>@mojo off</tt></blockquote>
+
+<h3>Trivia Note</h3>
+<p>Mojo is 'power' or 'magic' in vodoo.
+
+<h2>Making someone an Admin</h2>
+
+Now that you've made sure that everyone is a programmer,
+builder, or user instead of an admin, you might decide
+that an existing user should be a builder, programmer, or admin,
+or vice versa. If you have @mojo on, the @adjust command
+can make someone an Admin. Using:
+
+<blockquote><tt>@adjust &lt;name&gt; to an admin</tt></blockquote>
+
+user <tt>&lt;name&gt;</tt> will become an Admin. Similarly,
+
+<blockquote><tt>@adjust &lt;name&gt; to a programmer</tt></blockquote>
+
+will make someone a programmer. The @adjust command also works for
+changing guests into permanent users of the system.
+
+<h2>Changing the Title and Name of the server</h2>
+
+How do you change the name and title of the database?
+The default name of the server is "ColdCore", and the default
+title is "Virtual Environment Server".  You can change these with the
+command <tt>@set</tt>, with mojo enabled, such as:
+
+<blockquote><tt>@set $motd:server-name = "My New Server Name"</tt>
+<br><tt>@set $motd:server-title = "My Server's Title"</tt></blockquote>
+
+<h2>Changing the Object Name</h2>
+
+When you reference an object name by it's object name (such
+as $user, $edit, etc) it may sometimes be useful to change it.  You
+do this simply with the <tt>@rename</tt> command, such as:
+
+<blockquote><tt>@rename $old_obj_name $new_obj_name</tt></blockquote>
+
+If both names begin are in the standard Object Name syntax (beginning
+with a dollar-sign) @rename will figure it out and change the object
+name instead of the VR name.
+
+<h2>Changing the port number of the server</h2>
+
+If you want your default login port to be something different than
+1138. do the following:
+
+<blockquote><tt>@set $login_daemon:listen = NEW PORT NUMBER</tt></blockquote>
+
+<p>The next time the server is restarted the port number will
+be NEW PORT NUMBER.  You can change it immediately without restarting
+by typing:
+
+<blockquote><tt>;$login_daemon.start_listening()</tt></blockquote>
+
+<p><b>Note: THIS WILL DISCONNECT YOU</b>, simply reconnect.
+To see all $login_daemon options type:
+
+<blockquote><tt>@set $login_daemon:</tt></blockquote>
+
+<h2>Sections which Still Need Writing</h2>
+
+<ul>
+<li>Setting up the $http interface
+<li>Security Issues
+<li>When coding disasters strike
+<li>More... send suggestions?
+</ul>
+
+</td></tr></table>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=1 width=500>
+<tr>
+<td bgcolor="#000000">
+<table border=0 width="100%" cellspacing=1 cellpadding=3>
+<tr>
+  <td bgcolor="#c0c0ff" align=center>
+  <font size=1>
+  Last Modified on
+ 25-Aug-2005,
+ Copyright &copy; 1995-2015
+  by Brandon Gillespie, for the Cold Project
+  </font>
+  </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</center>

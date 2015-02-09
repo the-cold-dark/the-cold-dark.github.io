@@ -1,0 +1,314 @@
+<head>
+<title>Genesis Administrators Guide</title>
+</head>
+
+<style type="text/css">
+BODY {
+  color: black;
+  background-color: white;
+  background-image: url("../images/bg-2.gif");
+  font-family: sans-serif; }
+TT {
+  font-weight: normal;
+  font-style: normal;
+  font-family: courier; }
+H1 { font-family: sans-serif; }
+H2 { font-family: sans-serif; }
+H3 { font-family: sans-serif; }
+H4 { font-family: sans-serif; }
+PRE { font-family: monospace; }
+TH { font-family: sans-serif; }
+TD { font-family: sans-serif; }
+TABLE { border: 0; }
+IMG { border: 0 }
+</style>
+
+<script language=javascript src="psrc.js">
+</script>
+
+<body bgcolor=#ffffff text=#000000 link=#2000bf vlink=#0f005f alink=#af002f>
+<center>
+<img src="../images/cold-title.gif" alt="the Cold Software Project" width=499 height=53>
+
+<table border=0 cellspacing=0 cellpadding=0 width=500>
+<tr>
+<td align=center width=500>
+<a href="../download.html"
+   onMouseOver="imgOver('cbar-download')"
+   onMouseOut="imgOut('cbar-download')"><img
+   name="cbar-download"
+   src="../images/cbar-download.gif"
+   border=0
+   width=122
+   height=25
+   hspace=0
+   vspace=0
+   alt="[Download]"></a><a
+href="../reference.html"
+   onMouseOver="imgOver('cbar-reference')"
+   onMouseOut="imgOut('cbar-reference')"><img
+   name="cbar-reference"
+   src="../images/cbar-reference.gif"
+   border=0
+   width=117
+   height=25
+   hspace=0
+   vspace=0
+   alt="[Reference]"></a><a
+href="http://ice.cold.org:1180/cold_servers/list"
+   onMouseOver="imgOver('cbar-servers')"
+   onMouseOut="imgOut('cbar-servers')"><img
+   name="cbar-servers"
+   src="../images/cbar-servers.gif"
+   border=0
+   width=91
+   height=25
+   hspace=0
+   vspace=0
+   alt="[Servers]"></a><a
+href="../contact.html"
+   onMouseOver="imgOver('cbar-contact')"
+   onMouseOut="imgOut('cbar-contact')"><img
+   name="cbar-contact"
+   src="../images/cbar-contact.gif"
+   border=0
+   width=89
+   height=25
+   hspace=0
+   vspace=0
+   alt="[Contact]"></a><a
+href="../info.html"
+   onMouseOver="imgOver('cbar-info')"
+   onMouseOut="imgOut('cbar-info')"><img
+   name="cbar-info"
+   src="../images/cbar-info.gif"
+   border=0
+   width=81
+   height=25
+   hspace=0
+   vspace=0
+   alt="[Info]"></a>
+</td></tr></table>
+</center>
+<p>
+
+<p>
+<center>
+<table border=0><tr><td>
+<h1>Genesis Administrators Guide</h1>
+
+<p><font size="+1">Genesis was initially created as <i>ColdMUD</i> by Greg Hudson, and
+was later engineered by other individuals, being finalized by Brandon Gillespie.</font>
+<p>
+<font size=+2 color=#6f0020><b>Introduction</b></font>
+
+<p>Genesis consists of the programs <tt>coldcc</tt>, <tt>genesis</tt> and
+<tt>control</tt>.  <tt>coldcc</tt> is used to compile/decompile the
+database between textual and binary forms.  It is also used for
+external binary database manupulation (such as adding objects,
+fixing methods, etc).  <tt>genesis</tt> is the run-time interpreter of
+a binary database.  <tt>control</tt> is not used at the moment.</p>
+
+<p>Several variables are common to all programs:
+
+<blockquote><dl>
+<dt><p><font size=+1 color=#6f0020><b>Base Directory</b></font>
+<dd><p>The base directory is where programs will start to look for files
+    and other directories.  This is commonly named <tt>world</tt>, although
+    it's name is irrelevant as long as the programs know what it is.  Unless
+    you explicitly tell a program what the base directory is, it will assume
+    the base directory is the current directory (i.e. the directory you
+    are in when you execute the program).
+<dt><p><font size=+1 color=#6f0020><b>Binary Database Directory</b></font>
+<dd><p>The binary database directory is where the database files are located,
+    do not specify a directory already used by other files as this directory!
+    When the binary database is compiled <tt>coldcc</tt> will unlink and
+    destroy any existing files, in an existing binary directory, or it will
+    create it if it does not exist.  This entire directory is also copied
+    when a backup is performed (with the ColdC function backup()).
+
+    <p>If unspecified, the binary database directory will be <tt>binary</tt>
+    in the base directory.
+
+<dt><p><font size=+1 color=#6f0020><b>Logfile Directory</b></font>
+<dd><p>If the program logs information, it will attempt to open it's logfile
+    in the Logfile Directory.  If unspecifiedk, the logfile directory
+    will be <tt>logs</tt> in the base directory.  The logfile directory
+    will <i>not</i> be created if it does not exist.  When programs start
+    logfiles are opened for appending, any log information will remain
+    with the new log information appended to the end.
+
+<dt><p><font size=+1 color=#6f0020><b>DB Root File Directory</b></font>
+<dd><p>If the programs were compiled with RESTRICTIVE_FILES enabled, files
+    may only be read and written to within the database root file directory.
+    Unless otherwise specified this directory will be <tt>root</tt> in
+    the base directory.
+
+<dt><p><font size=+1 color=#6f0020><b>DB Executable Directory</b></font>
+<dd><p>The database executable directory is for programs to be executed from
+    ColdC with the <tt>execute()</tt> function.  Unless otherwise specified
+    this directory will be <tt>dbbin</tt> in the base directory.
+
+</blockquote></dl>
+
+<p><font size=+2 color=#6f0020><b>Database Versions</b></font>
+
+<p>It is important to remember that a binary database may <b>ONLY</b> be
+   interpreted with the same executable that created it.  Because the
+   byte codes can change from compile to compile (adding/removing modules
+   can change these), the binary database will be different.  It is important
+   to remember this when upgrading or adding/removing modules to a database.
+   Always decompile a database to text <i>first</i>, then recompile the
+   database with the new <tt>coldcc</tt>.
+
+<p><font size=+2 color=#6f0020><b>Compiling/Decompiling a database</b></font>
+
+<p>The simplest way to compile a text database is to enter the
+   base directory and run <tt>coldcc</tt>, specifying the textdump to read.
+   If the textdump is named <tt>textdump</tt> you do not need any
+   additional arguments, as this is what <tt>coldcc</tt> expects.  Otherwise
+   use the <tt>-t name</tt> flag (where <var>name</var> is the name of the
+   textdump).  For instance, if your text database was <tt>minimal.db</tt>
+   you would type:
+
+<p><blockquote><pre>coldcc -t minimal.db</pre></blockquote>
+
+<p>The simplest way to decompile a binary database is to enter
+   the base directory and run <tt>coldcc</tt> with the argument flag
+   <tt>-d</tt>.  It will decompile the binary database in the directory
+   <tt>binary</tt>.  If you have a different binary directory name you
+   can specify it with the flag <tt>-b name</tt>.  The text database
+   will be named <tt>textdump</tt>, unless you use the flag <tt>-t name</tt>.
+
+<p><font size=+2 color=#6f0020><b>Running the driver</b></font>
+
+<p>The simplest way to run the driver on a binary database is to
+   enter the base directory and run <tt>genesis</tt>.  <tt>genesis</tt>
+   will automatically fork off and run in the background (if you do
+   not want it to fork off, run it with the flag <tt>-f</tt>).  If the
+   logfile directory exists logged information will be printed to the
+   following files in the logfile directory:
+
+<blockquote><pre>
+db.log
+driver.log
+genesis.pid
+</blockquote></pre>
+<p><tt>db.log</tt> is the logfile for the database.  Information is written
+   to this file with the ColdC function <tt>log()</tt>.  <tt>driver.log</tt>
+   is used by the driver for messages which are not related to the run-time
+   environment (such as reporting a signal).  <tt>genesis.pid</tt> contains
+   the process id for the currently running driver.  This can be used to
+   shutdown a server.
+
+<p><font size=+2 color=#6f0020><b>Shutting down the server</b></font>
+
+<p>The server can be shutdown two ways.  Either by calling the ColdC
+function <tt>shutdown()</tt>, or by sending a signal to the driver process.
+
+<p><font size=+2 color=#6f0020><b>Signals</b></font>
+
+<p>Genesis catch and handle several signals.  Signals can be sent to a
+   process in unix with the command <tt>kill</tt>.  When a signal is
+   caught by <tt>genesis</tt> the method <tt>signal</tt> is called on
+   the system object.  If a database wishes to perform an action when
+   a signal is caught it may by hooking into this method.
+
+   <p>The following signals are caught by <tt>genesis</tt>, handled as
+   specified, then sent to the database by calling the <tt>signal</tt>
+   method on the system object:
+<blockquote><dl>
+<dt>HUP
+<dd>Sending this signal will flush all connection and file buffers, and will
+push the interpreter into non-atomic mode, if it is running atomically.
+<dt>FPE
+<dd>FPE signal is converted to an ~fpe error for the task which caused it.
+    No message is sent to the database for this signal.
+<dt>USR1
+<dd>This causes the driver to cancel all tasks (currently running,
+    preempted <em>and</em> suspended) and return to execution as
+    normal.  This is not normally suggested, as it can throw off
+    a database's normal execution situation.  However, it is useful
+    when a task has run out of control and is consuming resources.
+<dt>USR2
+<dd><tt>genesis</tt> does nothing with this signal.
+<dt>KILL
+<dd>If this signal is caught <tt>genesis</tt> will panic and shutdown.  No
+    message is sent to the database for this signal.
+<dt>CHLD
+<dt>PIPE
+<dd>These signals are used for internal processing, and are not sent to the
+    database.
+<dt>QUIT
+<dd>The system will attempt to shutdown, currently running processes will
+    continue to completion, and a message is sent to the database.
+<dt>INT
+<dt>TERM
+<dd>The first time any of these signals are received all tasks are
+    aborted (suspeded or otherwise), and the system attempts to shutdown.
+    If these signals are received again the driver will panic.  No message
+    is sent to the database for these signals.
+</dl></blockquote>
+
+To send a signal simply type:
+
+<blockquote><pre>kill -SIGNAL `cat logs/genesis.pid`</pre></blockquote>
+
+Where SIGNAL is one of the above signals, and assuming your log directory
+is <tt>logs</tt> (this is the default value).
+
+<p><font size=+2 color=#6f0020><b>Using a Binary Database</b></font>
+
+<p>You will  want to be <em>VERY</em> careful not to run from a corrupt
+binary database.  It is possible to work around the locks on a binary database
+which tell genesis and coldcc its status.  Do not do this!  If genesis
+reports the binary database as being corrupt, it is!  Many people have found
+that genesis will run from a corrupt db, if you diddle with some files.
+However, this is not a stable base to build upon, as the moment genesis
+reaches corrupt data in the database everything will crash, possibly corrupting
+even more data.  The suggested course of action when you have a corrupt binary
+database is to simply run from a backup.  If you do not have a backup then
+attempt to decompile the corrupt database with coldcc.
+
+<p><font color=#6f0020><b>NFS</b></font>
+
+<P>Running the binary database from an NFS disk is <i>NOT SUGGESTED</i>.
+You will run into lag problems if you do this, even more notably when
+a backup is running.  If possible some lag can be alleviated by soft
+linking 'binary.bak' to a local drive, for backups (such as /tmp/binary.bak).
+Overall this is simply not suggested.
+
+<p><font size=+2 color=#6f0020><b>Backups</b></font>
+
+<p>You can expect the backup to take approximately one second for every
+megabyte in your binary database (it will be faster or slower depending upon
+your computer and the speed of your disk).  Most of this is asyncrynous--
+you are still running while it is backing up.  There will be a slight
+pause of all tasks in the server when the backup is initialized.  The
+length of this pause will depend upon how large your cache is, and how
+many active objects are in memory.  In general this pause will be around
+one second as the cache is cleaned.  It has been tested on a large cache
+of 40x50 (2000 objects in cache) with many active objects.  The initial
+pause takes about three seconds with this configuration.
+
+</td></tr></table>
+<p>
+<table border=0 cellspacing=0 cellpadding=1 width=500>
+<tr>
+<td bgcolor="#000000">
+<table border=0 width="100%" cellspacing=1 cellpadding=3>
+<tr>
+  <td bgcolor="#efefff" align=center>
+
+  <font size=1>
+     Last Modified on 25-Aug-2005,
+     Copyright &copy; 1995-2015
+     by Brandon Gillespie, for the Cold Project
+  </font>
+  </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</center>
